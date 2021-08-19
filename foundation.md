@@ -122,49 +122,65 @@ title : 元素相关的建议信息<br />
 ```
 ## 3、使用display:inline-block会产生什么问题?解决方法?
 ### 问题复现
-问题: 两个display:inline-block元素放到一起会产生一段空白。 <br>
+问题: 两个display:inline-block元素放到一起会产生一段空白。 <br />
 如代码:
 ```js
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta http-equiv="X-UA-Compatible" content="ie=edge"> <title>Document</title>
-<style>
-.container { width: 800px; height: 200px;
-}
-.left {
-font-size: 14px; background: red; display: inline-block; width: 100px;
-height: 100px;
-}
-.right {
-font-size: 14px; background: blue; display: inline-block; width: 100px;
-height: 100px;
-}
-    </style>
-  </head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 800px;
+      height: 200px;
+    }
+
+    .left {
+      font-size: 14px;
+      background: red;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+
+    .right {
+      font-size: 14px;
+      background: blue;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+  </style>
+</head>
+
 <body>
 
- 
-<div class="container">
-  <div class="left">
-左
-</div><div class="right"> 右
-  </div>
-</div>
 
-<div class="container">
-      <div class="left">
-左
-      </div>
-      <div class="right">
-右
-      </div>
+  <div class="container">
+    <div class="left">
+      左
     </div>
-  </body>
+    <div class="right"> 右
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="left">
+      左
+    </div>
+    <div class="right">
+      右
+    </div>
+  </div>
+</body>
+
 </html>
 ```
-效果如下:<br>
+效果如下:<br />
 
 ![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9986e69276e947cbb5ee577a29b51337~tplv-k3u1fbpfcp-watermark.image)
 
@@ -347,31 +363,31 @@ content, IE盒模型是content+padding+border。
 # 六、算法
 ## 1、两个数不使用四则运算得出和
 
-1)按位与<br>
-8 & 7 // -> 0<br>
-// 1000 & 0111 -> 0000 -> 0<br>
-每一位都为 1，结果才为 1<br>
-2)按位或<br>
-8 | 7 // -> 15<br>
-// 1000 | 0111 -> 1111 -> 15<br>
-其中一位为 1，结果就是 1<br>
-3)按位异或 每一位都不同，结果才为 1<br>
-8 ^ 7 // -> 15<br>
-8 ^ 8 // -> 0<br>
-// 1000 ^ 0111 -> 1111 -> 15 // 1000 ^ 1000 -> 0000 -> 0<br>
-从以上代码中可以发现按位异或就是不进位加法<br>
+1)按位与<br />
+8 & 7 // -> 0<br />
+// 1000 & 0111 -> 0000 -> 0<br />
+每一位都为 1，结果才为 1<br />
+2)按位或<br />
+8 | 7 // -> 15<br />
+// 1000 | 0111 -> 1111 -> 15<br />
+其中一位为 1，结果就是 1<br />
+3)按位异或 每一位都不同，结果才为 1<br />
+8 ^ 7 // -> 15<br />
+8 ^ 8 // -> 0<br />
+// 1000 ^ 0111 -> 1111 -> 15 // 1000 ^ 1000 -> 0000 -> 0<br />
+从以上代码中可以发现按位异或就是不进位加法<br />
 
 这道题中可以按位异或，因为按位异或就是不进位加法，8 ^ 8 = 0 如果进位了，就是 16 了，所以我们只需要将两个数进行异或操作，然后进位。那么也就是说两个二进制都是 1 的位置，左边应该有一个 进位 1，所以可以得出以下公式 a + b = (a ^ b) + ((a & b) << 1) ，然后通过迭代的方式模拟加法
 
 答案：
 
 ```js
-function sum(a, b) {<br>
-    if (a == 0) return b<br>
-    if (b == 0) return a<br>
-    let newA = a ^ b<br>
-    let newB = (a & b) << 1<br>
-    return sum(newA, newB)<br>
+function sum(a, b) {<br />
+    if (a == 0) return b<br />
+    if (b == 0) return a<br />
+    let newA = a ^ b<br />
+    let newB = (a & b) << 1<br />
+    return sum(newA, newB)<br />
 }
 ```
 
